@@ -1,0 +1,167 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://utils/Lynx/TextAreaBox.tres" type="StyleBox" id=1]
+[ext_resource path="res://utils/Lynx/Hack-Regular.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://utils/Lynx/Console.gd" type="Script" id=3]
+
+[sub_resource type="DynamicFont" id=1]
+font_data = ExtResource( 2 )
+
+[sub_resource type="Theme" id=2]
+default_font = SubResource( 1 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 28
+outline_size = 1
+outline_color = Color( 0.258824, 0.258824, 0.258824, 1 )
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=4]
+size = 28
+outline_size = 1
+outline_color = Color( 0.258824, 0.258824, 0.258824, 1 )
+font_data = ExtResource( 2 )
+
+[node name="Console" type="CanvasLayer"]
+script = ExtResource( 3 )
+
+[node name="C" type="PanelContainer" parent="."]
+self_modulate = Color( 1, 1, 1, 0.784314 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = SubResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="C"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 1017.0
+margin_bottom = 593.0
+
+[node name="HSplitContainer" type="HSplitContainer" parent="C/VBoxContainer"]
+margin_right = 1010.0
+margin_bottom = 557.0
+focus_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="C/VBoxContainer/HSplitContainer"]
+margin_right = 667.0
+margin_bottom = 557.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 2.0
+
+[node name="Label" type="Label" parent="C/VBoxContainer/HSplitContainer/VBoxContainer"]
+margin_right = 667.0
+margin_bottom = 33.0
+custom_fonts/font = SubResource( 3 )
+text = "Console"
+
+[node name="ConsoleOutput" type="RichTextLabel" parent="C/VBoxContainer/HSplitContainer/VBoxContainer"]
+margin_top = 37.0
+margin_right = 667.0
+margin_bottom = 557.0
+focus_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 2.0
+custom_styles/normal = ExtResource( 1 )
+bbcode_enabled = true
+bbcode_text = "Lynx [Godot 3.2.2 stable]
+(c) 2020 k2kra All rights reserved.
+
+"
+text = "Lynx [Godot 3.2.2 stable]
+(c) 2020 k2kra All rights reserved.
+
+"
+scroll_following = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="C/VBoxContainer/HSplitContainer"]
+margin_left = 679.0
+margin_right = 1010.0
+margin_bottom = 557.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="C/VBoxContainer/HSplitContainer/VBoxContainer2"]
+margin_right = 331.0
+margin_bottom = 33.0
+custom_fonts/font = SubResource( 4 )
+text = "Logcat"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="C/VBoxContainer/HSplitContainer/VBoxContainer2"]
+margin_top = 37.0
+margin_right = 331.0
+margin_bottom = 62.0
+
+[node name="Button" type="Button" parent="C/VBoxContainer/HSplitContainer/VBoxContainer2/HBoxContainer"]
+margin_right = 52.0
+margin_bottom = 25.0
+text = "Copy"
+
+[node name="Button2" type="Button" parent="C/VBoxContainer/HSplitContainer/VBoxContainer2/HBoxContainer"]
+margin_left = 56.0
+margin_right = 118.0
+margin_bottom = 25.0
+text = "Clear"
+
+[node name="Control" type="Control" parent="C/VBoxContainer/HSplitContainer/VBoxContainer2/HBoxContainer"]
+margin_left = 122.0
+margin_right = 154.0
+margin_bottom = 25.0
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="C/VBoxContainer/HSplitContainer/VBoxContainer2/HBoxContainer"]
+margin_left = 158.0
+margin_top = 3.0
+margin_right = 228.0
+margin_bottom = 22.0
+text = " Filter"
+
+[node name="OptionButton" type="OptionButton" parent="C/VBoxContainer/HSplitContainer/VBoxContainer2/HBoxContainer"]
+margin_left = 232.0
+margin_right = 331.0
+margin_bottom = 25.0
+text = "Verbose"
+items = [ "Verbose", null, false, 0, null, "Warning", null, false, 1, null, "Error", null, false, 2, null ]
+selected = 0
+
+[node name="Logcat" type="RichTextLabel" parent="C/VBoxContainer/HSplitContainer/VBoxContainer2"]
+margin_top = 66.0
+margin_right = 331.0
+margin_bottom = 557.0
+focus_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_styles/normal = ExtResource( 1 )
+bbcode_enabled = true
+scroll_following = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="C/VBoxContainer"]
+margin_top = 561.0
+margin_right = 1010.0
+margin_bottom = 586.0
+
+[node name="InputBox" type="LineEdit" parent="C/VBoxContainer/HBoxContainer"]
+margin_right = 924.0
+margin_bottom = 25.0
+size_flags_horizontal = 3
+custom_styles/normal = ExtResource( 1 )
+placeholder_text = "Type command here..."
+caret_blink = true
+
+[node name="Button" type="Button" parent="C/VBoxContainer/HBoxContainer"]
+margin_left = 928.0
+margin_right = 1010.0
+margin_bottom = 25.0
+text = "Confirm"
+[connection signal="pressed" from="C/VBoxContainer/HSplitContainer/VBoxContainer2/HBoxContainer/Button2" to="." method="_on_Button2_pressed"]
+[connection signal="text_entered" from="C/VBoxContainer/HBoxContainer/InputBox" to="." method="_on_InputBox_text_entered"]
+[connection signal="pressed" from="C/VBoxContainer/HBoxContainer/Button" to="." method="_on_Button_pressed"]

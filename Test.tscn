@@ -1,0 +1,93 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://icon.png" type="Texture" id=1]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends Node2D
+
+func _ready():
+	D.i(\"This is info\")
+	D.w(\"This is warning\")
+	D.e(\"This is error\")
+	D.execute_command(\"echo Hello World!\", true)
+"
+
+[sub_resource type="GDScript" id=2]
+script/source = "extends Node2D
+
+var grid_graph := GridGraph.new()
+
+func _ready():
+	D.load_command_module(self)
+	
+	for y in range(10):
+		for x in range(10):
+			D.execute_command(\"add %d %d\"%[x, y], true)
+
+func _draw():
+	grid_graph.draw_grid_graph(self)
+	
+#对gridmap进行功能测试
+
+#################################
+#指令处理模块
+const MODULE_INFO = {
+	\"module_name\": \"GridGraphTest\",
+	\"module_desc\": \"Used to test grid graph \",
+	\"commands\": {
+		\"add\": {
+			\"method\": \"___ADD\",
+			\"desc\": \"add x y\"
+		},
+		\"remove\": {
+			\"method\": \"___REMOVE\",
+			\"desc\": \"remove x y\"
+		},
+		\"path\": {
+			\"method\": \"___PATH\",
+			\"desc\": \"path x1 y1 x2 y2\"
+		}
+	}
+}
+func ___ADD(arg_array:Array):
+	if arg_array.size() != 2:
+		D.write_console(\"2 arguments required, %d given\"%arg_array.size(), true, Color.red)
+		return
+	if grid_graph.add_vertex(Vector2(arg_array[0] as int, arg_array[1] as int)) != OK:
+		D.write_console(\"Failed!\", true, Color.red)
+	update()
+func ___REMOVE(arg_array:Array):
+	if arg_array.size() != 2:
+		D.write_console(\"2 arguments required, %d given\"%arg_array.size(), true, Color.red)
+		return
+	if grid_graph.remove_vertex(Vector2(arg_array[0] as int, arg_array[1] as int)) != OK:
+		D.write_console(\"Failed!\", true, Color.red)
+	update()
+func ___PATH(arg_array:Array):
+	if arg_array.size() != 4:
+		D.write_console(\"4 arguments required, %d given\"%arg_array.size(), true, Color.red)
+		return
+	var x1 = arg_array[0] as int
+	var x2 = arg_array[2] as int
+	var y1 = arg_array[1] as int
+	var y2 = arg_array[3] as int
+	D.write_console(String(grid_graph.calculate_path(Vector2(x1, y1), Vector2(x2, y2))))
+	update()
+#################################
+"
+
+[node name="Test" type="Node2D"]
+script = SubResource( 1 )
+
+[node name="icon" type="Sprite" parent="."]
+visible = false
+position = Vector2( 544.872, 309.628 )
+scale = Vector2( 19.514, 13.1107 )
+texture = ExtResource( 1 )
+
+[node name="graph" type="Node2D" parent="."]
+script = SubResource( 2 )
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2( 245.185, 167.46 )
+current = true
